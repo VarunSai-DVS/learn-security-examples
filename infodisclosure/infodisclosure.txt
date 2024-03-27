@@ -1,3 +1,16 @@
 Briefly explain the vulnerability and why the secure version prevents the vulnerability.
+
+The insecure script does not sanitize the username which could allow an injection attack.
+User can provide the username as a query such as username!='' which could return information for all users.
+To avoid this, secure.js script performs sanitization on username that we receive from the client.
+
+
 Which CIA property does tampering violate?
+
+Confidentiality
+
 What additional security mechanisms can you incorporate?
+
+- Remove the console logs which logs sensitive information.
+- Add authentication mechanism
+- When sending information, we can encrypt the payload.

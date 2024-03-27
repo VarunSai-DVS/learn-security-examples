@@ -1,2 +1,9 @@
 - Briefly explain the vulnerability and why the secure version prevents the vulnerability.
+The script inside insecure.js is vulnerable because there is no error handling when querying
+the DB. So, if an error occurs the server will crash and will not be accessible causing a denial
+of service.
+
 - What additional security mechanisms can you incorporate to prevent such attacks?
+1. Add a rate limiting mechanism because even though error handling mechanism is present, the server
+is still be DDOS attacked and would crash.
+2. Add input sanitization for other incoming parameters.

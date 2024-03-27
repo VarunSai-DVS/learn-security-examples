@@ -1,1 +1,7 @@
 Briefly explain the vulnerability and why the secure version prevents the vulnerability.
+
+The vulnerability in insecure.js is due to its permission for setting session information
+ due to the absence of cookie.httpOnly being set to false. This can cause malicious
+users to exploit session hijacking or execute Cross-Site Request Forgery (CSRF) attacks.
+The fix this, we need to set cookie.httpOnly is set to true, which restricts unauthorized
+ access to session data and preventing attacks.
