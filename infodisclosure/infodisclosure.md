@@ -30,6 +30,28 @@ This will create a database in MongoDB called __infodisclosure__. Verify its pre
 
 Answer the following:
 
-1. Briefly explain the potential vulnerabilities in **insecure.ts**
-2. Briefly explain how a malicious attacker can exploit them.
-3. Briefly explain the defensive techniques used in **secure.ts** to prevent the information disclosure vulnerability?
+1. Briefly explain the potential vulnerabilities in `insecure.ts`
+
+- **NoSQL Injection Vulnerability**:  
+  The query in the route is built directly from user input without proper validation or sanitization. This opens the door to NoSQL injection attacks where an attacker can manipulate the query to access unauthorized data.
+
+- **Lack of Access Control**:  
+  There's no restriction on who can access the `/userinfo` route. Anyone who supplies a valid username can get user information, regardless of authentication.
+
+- **Exposing Sensitive Information**:  
+  The server logs sensitive data like the username using `console.log()`, which could leak important system or user details that attackers might exploit.
+
+2. Briefly explain how a malicious attacker can exploit them
+
+- **Exploiting NoSQL Injection Vulnerability**:  
+  An attacker can craft malicious input like `?username[$ne]=` to alter the MongoDB query logic. For example: `/userinfo?username={"$ne":""}`
+- This could return all users from the database, exposing private data such as usernames and passwords.
+
+- **Exploiting Lack of Access Control**:  
+  Since access to `/userinfo` isn’t restricted, an attacker can submit requests with arbitrary usernames to retrieve sensitive information about other users.
+
+3. Briefly explain the defensive techniques used in `secure.ts` to prevent the information disclosure vulnerability
+
+- **Input Validation and Sanitization**:
+- First, it checks if `username` is a valid string. If not, it responds with a `400` status and a message: `Invalid username format`.
+- Then it sanitizes the input by stripping out all non-alphanumeric characters using a regular expression. This reduces the risk of NoSQL injection.
